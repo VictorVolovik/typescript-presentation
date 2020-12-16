@@ -1,40 +1,114 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>TypeScript</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+        <section>
+          <h1>TypeScript</h1>
+          <h2>Учимся основам</h2>
+          <p>Для навигации используйте пробел или стрелки клавиатуры.</p>
+          <p>Esc для обзора слайдов.</p>
+          <hr>
+          <p>
+          За авторством Воловика В.К. для <a href="https://open-broker.ru/" target="_blank" rel="noopener">АО «Открытие Брокер»</a>.
+          </p>
+          <p>
+          Исходный код доступен на <a href="https://github.com/VictorVolovik/typescript-presentation" target="_blank" rel="noopener">GitHub</a>.
+          </p>
+        </section>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+        <section>
+          <h2>Содержание:</h2>
+          <ul>
+            <li>
+              <a href="#/2">Типобезопасность</a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h2>Типобезопасность</h2>
+            <p>Использование типизации для предотвращения ошибок на стадии анализа кода и компиляции.</p>
+            <p>Несколько примеров некорректных операций:<p>
+            <ul>
+              <li>
+              Умножение числа на список
+              </li>
+              <li>
+              Вызов функции с аргументом из списка строк, когда необходимо передавать список объектов
+              </li>
+              <li>
+              Вызов несуществующего метода объекта
+              </li>
+              <li>
+              Импорт модуля, который по какой-то причине недоступен по указанному пути
+              </li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="hljs" data-trim contenteditable>
+3 + []            // Evaluates to the string "3"
+
+let obj = {}
+obj.foo           // Evaluates to undefined
+
+function a(b) {
+  return b/2
+}
+a("z")            // Evaluates to NaN
+            </code></pre>
+            <p>
+              <a
+                href="https://jsbin.com/wiliseq/12/edit?js,console"
+                target="_blank"
+                rel="noopener"
+                >
+                JS Bin
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/MwAg1CDaC6J-C4HokgKIDcCGAbArlgC4CmAziIQPYUAWxIphATgJYB2A5iAETDcBQ-HMUIhKAIwBWIALwgA3gF9+EyQDoAZpWqJEKdNnxEyFanjYATYhvbELgjeYDGhFpTYgsACnEBKBfxwTCJ4TB7iSABM-Mre3ABe3P66eqiYuAQk5FQgAHJYuUA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
 </html>
