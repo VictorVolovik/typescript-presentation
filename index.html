@@ -40,6 +40,15 @@
             <li>
               <a href="#/3">Обзор TypeScript</a>
             </li>
+            <li>
+              <a href="#/3">Типы</a>
+            </li>
+            <li>
+              <a href="#/4">any</a>
+            </li>
+            <li>
+              <a href="#/5">unknown</a>
+            </li>
           </ul>
         </section>
 
@@ -190,6 +199,89 @@ let cc = [true, false]            // cc is an array of booleans
             <h3>Настройка и рабочее окружение</h3>
             <p>Поддержка в VSCode из коробки, требует дополнительной настройки для других редакторов и IDE. Компиляция происходит при помощи TSC. Большая часть настройки происходит в tsconfig.json. Настройка линтера TSLint - tslint.json.</p>
           </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Типы</h2>
+            <p>Определение: набор значений и все, что можно с ними делать</p>
+            <ul>
+              <li>
+              boolean - булевые значения (true и false) и операции (||, && и !)
+              </li>
+              <li>number - все числа, операции над ними (+, -, *, /, %, **, ||, &&, ?), методы (.toFixed, .toPreicision, .toString)</li>
+              <li>string - все строки, операции над ними (+, ||, &&), методы (.concat, .toUpperCase)</li>
+            </ul>
+            <img src="img/types.png" height="300"/>
+          </section>
+          <section>
+            <h3>Литерал типа (type literal)</h3>
+            <p>Тип, который представляет одно значение и только его.</p>
+          </section>
+        </section>
+
+        <section>
+          <h2>any</h2>
+          <p>Все что угодно, стоит избегать, так как фактически приравнивает поведение к JS. Можно запретить флагом noImplicitAny или strict модом.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: any = 666            // any
+let b: any = ['danger']     // any
+let c = a + b               // any
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXNB2BPCBeCA2TFs99g9PgogFCiQBGcUSqEA2gOQAmNA5iAE6MC6ehxMuAgBjOlAgBqCBTxzcAmqSA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+        </section>
+
+        <section>
+          <h2>unknown</h2>
+          <p>Тип заранее неизвестнeн, но можно сравнивать (==, ===, ||, &&, ?), отрицать (!), определять тип (typeof и instanceof).</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: unknown = 30         // unknown
+let b = a === 123           // boolean
+let c = a + 10              // Error TS2571: Object is of type 'unknown'.
+if (typeof a === 'number') {
+  let d = a + 10            // number
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBCuA7A1og9gd0RAvBAzAAwQmmkD05CK6WAUKJAEa7S454CMATPmfyUoQmaNKCiIG4CAGNWUCAGoInYgPVCAogCdtabRAAqAZW4BWAOyc4AeSYArEDMgBLAM4Q0AMwhgAngAOIBAA5EiomIghAHR0Lj4AFP5B3mwceCGI8AC2TCDaIQCUEADedCSMEAAm8koqauoUVFm5+XQAvnRAA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+        </section>
+
+        <section>
+          <h2>boolean</h2>
+          <p>Булевые значения - true и false. Доступно сравнение (==, ===, ||, &&, ?), отрицать (!).</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a = true                // boolean
+var b = false               // boolean
+const c = true              // true
+let d: boolean = true       // boolean
+let e: true = true          // true
+let f: true = false         // Error TS2322: Type 'false' is not assignable
+                            // to type 'true'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8FgE4FcQXRzWIHocQCMB7I0KAOwCgA3KRQuCAMymAGc1svd9jSQKlAMZFybSEMZJU3bHgQoQlUJAAmALkIky5KYq7y+O5eAghN0tPEuyeC1CchML++C3acD+AKKJERegAVAGUAJgBmUNDNQIBPAAc0AHJ3DiSIAEs2CHIiSCg2NgyAc3IoAlBKW2qvBCIEBOTLJIA6SiA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
         </section>
 
       </div>
