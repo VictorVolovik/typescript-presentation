@@ -37,6 +37,9 @@
             <li>
               <a href="#/2">Type Safety - Типобезопасность</a>
             </li>
+            <li>
+              <a href="#/3">Обзор TypeScript</a>
+            </li>
           </ul>
         </section>
 
@@ -92,6 +95,103 @@ a("z")            // Evaluates to NaN
             </p>
           </section>
         </section>
+
+        <section>
+          <section>
+            <h2>Обзор TypeScript</h2>
+            <h3>Компиляция</h3>
+            <ol>
+              <li>Исходный код TS -> TS AST (абстрактное синтаксическое дерево)</li>
+              <li>Проверка AST на типобезопаность</li>
+              <li>TS AST -> JS</li>
+              <li>JS -> JS AST</li>
+              <li>JS AST -> байткод</li>
+              <li>Обработка байткода в рантайме</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Система типов</h3>
+            <p>Два подхода - явно обозначать типы либо давать наследовать автоматически.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: number = 1                // a is a number
+let b: string = 'hello'          // b is a string
+let c: boolean[] = [true, false] // c is an array of booleans
+
+// vs
+let aa = 1                        // aa is a number
+let bb = 'hello'                  // bb is a string
+let cc = [true, false]            // cc is an array of booleans
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBB2BXAtgIxAJwgXggRgkKOJIgHozoIBLAZyqTUwChRJU5awNr4BzHBADkACxDBgAeyGliFCKhr0oELj36twEAMZxUkyaCjwA2gF1BJ7ohAAaCADMowWiAvztS6PGgYMUAE8ISQcFAyN4WmZmeQA3KLZoFVwCWTS0+SgVOgYUdAxNdkVcUXEpGXSMylRFHJU1Xj5CnU9cKwwbeycXN0rCD086nyg-QODQ-UMQYyigA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Отличия TypeScript от JavaScript</h3>
+            <ul>
+              <li>
+              Привязка типов?
+              JS - динамическая в рантайме, TS - статическая во время компиляции, с учетомпостепенного перехода от JS к TS.
+              </li>
+              <li>
+              Автоматическое преобразование типов?
+              JS -  да, TS - большей частью нет.
+              </li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="hljs" data-trim contenteditable>
+3 + [1];                         // evaluates to "31"
+(3).toString() + [1].toString()  // evaluates to "31"
+            </code></pre>
+            <pre><code class="hljs" data-trim contenteditable>
+3 + [1];                         // Error TS2365: Operator '+' cannot be applied to
+                                 // types '3' and 'number[]'.
+(3).toString() + [1].toString()  // evaluates to "31"
+            </code></pre>
+            <p>
+              <a
+                href="https://jsbin.com/hodubey/5/edit?js,console"
+                target="_blank"
+                rel="noopener"
+                >
+                JS Bin
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/MwAg1CDaCMC6DcInJatKD0GQFEBOeA9niACoDKATMAGwCsAXCAPIAOApngIYAuxIAcjACQAYy4A7CYR4gARuxBdWrADYBLdgBMQfAFDpDRo1l0BPDgGdBwEZJ0CJAVwC2CvJFgCAdHoAUwACU3nzkPHjqEgDmfoHgUHAhhGER0bFIpuwAblyqTrzs1nwgAETA0CV6QA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <ul>
+              <li>
+              В какой момент происходит проверка типов?
+              JS - рантайм, TS - компиляция + статический анализ в редакторе.
+              </li>
+              <li>
+              В какой момент всплывают ошибки?
+              JS - большей частью рантайм, исключения - явные ошибки синтаксиса (следовательно, надо покрывать юнит тестами), TS - большей частью во время компиляции, исключения - ошибки, зависимые от внешних факторов: память, соеденение с сетью, некорректная обработка действий пользователя итп итд
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Настройка и рабочее окружение</h3>
+            <p>Поддержка в VSCode из коробки, требует дополнительной настройки для других редакторов и IDE. Компиляция происходит при помощи TSC. Большая часть настройки происходит в tsconfig.json. Настройка линтера TSLint - tslint.json.</p>
+          </section>
+        </section>
+
       </div>
     </div>
 
