@@ -41,13 +41,28 @@
               <a href="#/3">Обзор TypeScript</a>
             </li>
             <li>
-              <a href="#/3">Типы</a>
+              <a href="#/4">Типы</a>
             </li>
             <li>
-              <a href="#/4">any</a>
+              <a href="#/5">any</a>
             </li>
             <li>
-              <a href="#/5">unknown</a>
+              <a href="#/6">unknown</a>
+            </li>
+            <li>
+              <a href="#/7">boolean</a>
+            </li>
+            <li>
+              <a href="#/8">number</a>
+            </li>
+            <li>
+              <a href="#/9">bigint</a>
+            </li>
+            <li>
+              <a href="#/10">string</a>
+            </li>
+            <li>
+              <a href="#/11">symbol</a>
             </li>
           </ul>
         </section>
@@ -283,6 +298,127 @@ let f: true = false         // Error TS2322: Type 'false' is not assignable
               </a>
             </p>
         </section>
+
+        <section>
+          <h2>number</h2>
+          <p>Все числа, включая целые числа, числа в плавающей точкой, позитивные и негативные, Infinity, NaN</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a = 1234                // number
+var b = Infinity * 0.10     // number
+const c = 5678              // 5678
+let d = a < b               // boolean
+let e: number = 100_000     // number
+let f: 26.218 = 26.218      // 26.218
+let g: 26.218 = 10          // Error TS2322: Type '10' is not assignable
+                            // to type '26.218'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EEYBMBmALBTXs4gejwgDsBXAWwCMQAnAKADcpqIK4IBJIgMwEsiewATwgAqCAAYAdAnE4CxclToBjAPZEAzpGVsArADYA7AA5cZ-IQMnaoSABM2MADwtzZ+RVWrQUIjfAQIABcCpQ0bDLiAPrisXKEpGF0thBcIUj6kkgIpvAZWTm48vnZxv6QAObpmaURsm7yAKLU1KrMACoAyqhISCHtggAOIBAA5DKjEDwaxKqQUBoaPBVEUBSgtG5bDYRgqhBCw2MlOaOStEA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+        </section>
+
+        <section>
+          <h2>bigint</h2>
+          <p>Упрощает работу с большими числами, соответствует BigInt в JS.</p>
+          <p>NB поддержка не на всех платформах.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a = 1234n               // bigint
+const b = 5678n             // 5678n
+var c = a + b               // bigint
+let d = a < 1235            // boolean
+let e = 88.5n               // Error TS1353: A bigint literal must be an integer.
+let f: bigint = 100n        // bigint
+let g: 100n = 100n          // 100n
+let h: bigint = 100         // Error TS2322: Type '100' is not assignable
+                            // to type 'bigint'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EEYBMBmALAOwtnu8Hp8IAjASwHNSMwAoAYwHsMBnSYuCAVgDYB2ADix5hEQlz6CaANygAnCHQ4wA1CRHqxZStRqhIAEyUQAPIlSd1uTQwagoGXeAggO-fgDpOQy1aIBRWVkGeQAVAGUEFE4UAC4IAEESCipIYFIwEFkoYAgAWwBXVhIXewgUkHJM90dIADM4rRSOBAAGFu8CIkadPQhyONb25raO4TFBh16ACwbk6mGWyzEAoNCw1CQkOJCATwAHFwByQcOy5ggMBkgoZmYKDChiUBofV5ExMAYIMH2j7rBDtUgA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+        </section>
+
+        <section>
+          <h2>string</h2>
+          <p>Строки, конкатенация и методы строк.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a = 'hello'             // string
+var b = 'billy'             // string
+const c = '!'               // '!'
+let d = a + ' ' + b + c     // string
+let e: string = 'zoom'      // string
+let f: 'john' = 'john'      // 'john'
+let g: 'john' = 'zoe'       // Error TS2322: Type "zoe" is not assignable
+                            // to type "john".
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EHIAWJjAPYItnucHp8IBnMAJwEsA7AcwCgA3KMiAIzkVYrQE8s8BEQiXLV6AY3RVSEcRwQBCfoIHDFCOqEgATDjADUiI4faG5uYaUq1N4CCABcI6zXkAvdOgC2ygkStitpAAZk4IAFboSFRY8BFRMapE8dEaWhA0YZGp7uggvn4QAKJkZOgsACoAygBMAMw1NU4VPAAOIBAARB4gnRAUxBBU6JBQxMQUNFRQrKB0KguLQkRg6BBgbR2d2VSdAHR0QA"
+                target="_blank"
+                rel="noopener"
+              >
+                TS Playground
+              </a>
+            </p>
+        </section>
+
+        <section>
+          <section>
+            <h2>symbol</h2>
+            <p>Соответствуют ES2015</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a = Symbol('a')         // symbol
+let b: symbol = Symbol('b') // symbol
+var c = a === b             // boolean
+let d = a + 'x'             // Error TS2469: The '+' operator cannot be applied
+                            // to type 'symbol'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EGUCeBbARge2ACgORVwEoITTSB6ciAZ1U2AChRI0AuGurORTnXNIhEod0WBgDcoAJwgBjbjFhKIaMmrLDMWEFAB2TcBAAmCiAGoIuAB651d4QFEpUjDIAqCAEwAWAGwBOdjcACxBLM1sMAAcQKSgwVzk9XQwWMKgoqOAASxAjBjtCoo0qBIgwJBjLWlFgXAA6BiA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>unique symbol</h3>
+            <p>В случае объявления через const либо явным указанием.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+const e = Symbol('e')                // typeof e
+const f: unique symbol = Symbol('f') // typeof f
+let g: unique symbol = Symbol('f')   // Error TS1332: A variable whose type is a
+                                     // 'unique symbol' type must be 'const'.
+let h = e === e             // boolean
+let i = e === f             // Error TS2367: This condition will always return
+                            // 'false' since the types 'unique symbol' and
+                            // 'unique symbol' have no overlap.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/MYewdgzgLgBApjAvDAygTwLYCMQBsAUA5HIQJQwWVXUwD0tMUaADnCAGbwBQoks7ALhgBXMAEsAjsIQRMOXElRy8RdmToMmrDjHZdccWAHMhoydJizseRemsFCa8hXowAogCcPIDzAAqKACMAMzBAExCAIIwAG4Ahh5icVgGMADuABYgEAhaCGIQMHFcNKVl5aWuhGZSMsq4hIwsCBjC0DBYCIS80IQAdPqGMBmKCIjj8BWUrjh4cHFgg7Bio0gTnFMa7l4+-ihhwQBsAOxCfhkFMLwAJmJQYuDpYrgKcbhpcWiFHobCHoubQHTBiON45RoQMRgYC5DK5ZqFariWqWeqNBbXEpAwFVGoWKzyRoZOIxBBgEAwECkjy4OLMAZAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
 
       </div>
     </div>
