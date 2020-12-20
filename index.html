@@ -64,6 +64,9 @@
             <li>
               <a href="#/11">symbol</a>
             </li>
+            <li>
+              <a href="#/12">Типизация объектов</a>
+            </li>
           </ul>
         </section>
 
@@ -419,6 +422,250 @@ let i = e === f             // Error TS2367: This condition will always return
           </section>
         </section>
 
+        <section>
+          <section>
+            <h2>Типизация объектов</h2>
+            <p>Отличия структурной и номитантивной типизации -
+            <a href="https://habr.com/ru/post/446768/" target="_blank">статья на тему.</a></p>
+            <h3>object</h3>
+            <p>Значение - объект и не null.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+  let a: object = {
+    b: 'x'
+  }
+  a.b   // Error TS2339: Property 'b' does not exist on type 'object'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBD2AjAViAxpAvBA3gKAgkTgHIAPEvAXzygDpFCIB6ZiAUQCdP5OIAVAMoAmAMyiAnHAAKPAA4hOYAJ4QSiEhAAm8EAGcIAO3iQQZAJZ7I8QxBUK1SVBhJ08QA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Литерал объекта</h3>
+            <p>Автоматическая типизация на основе значения...</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a = {
+  b: 'x'
+}            // {b: string}
+a.b          // string
+
+let b = {
+  c: {
+    d: 'f'
+  }
+}            // {c: {d: string}}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EG8BQEICMBcEDkAPbSAvqiaSQPTmKYQDOYATgJYB2A5oUlAHRplmU6jVmyRJQkPvGSoAxlhkkAJlmwAzAqk7F+AqgnmIVQ5u0KcgA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>...либо явным указанием</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: {b: number} = {
+  b: 12
+}            // {b: number}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBDeAjOA7ArgW0SATgXwgF4EAoCCZCARgCYSDzGnyB6FhS9LXPIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Объявление через const отличается от примитивных типов, не является литералом типа</p>
+            <pre><code class="hljs" data-trim contenteditable>
+const a: {b: number} = {
+  b: 12
+}            // Still {b: number}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/MYewdgzgLgBAhgLhgbwEZLAVwLaoKYBOAvjALwoBQMM6MAjAEwUnWtvUD0HMAylAJYAbQSlpZchIkA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Пример с классом.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let c: {
+  firstName: string
+  lastName: string
+} = {
+  firstName: 'john',
+  lastName: 'barrowman'
+}
+
+class Person {
+  constructor(
+    public firstName: string,   // public is shorthand for
+                                // this.firstName = firstName
+    public lastName: string
+    ) {}
+}
+c = new Person('matt', 'smith') // OK
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAxgXBDeAoCEBmBLATgZzAOQEMBbEOXTdAOwHNkJgDdCSywKbEBfCAXgTow58xUhADkAKwD2AC0piANHQZMRcMQCMCmTFIDuRAvK6JEUFdggAFEDimV+KKPfIBXKGCmYAFHRQAHVw1gdCg0LFUWCHIqagUUCAB6RIhA4NCIdEtsGS8wGSMAEzQvPwTyisqq8uSIfKyAOkFIkF5woWYQMrSQsJVhKJiOcoBKBE4TML5KED1rW2x7bzFDMDBFcWwidHyxMdqAeQBpIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Примеры ошибок.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: {b: number}
+
+a = {}  // Error TS2741: Property 'b' is missing in type '{}'
+        // but required in type '{b: number}'.
+
+a = {
+  b: 1,
+  c: 2  // Error TS2322: Type '{b: number; c: number}' is not assignable
+}       // to type '{b: number}'. Object literal may only specify known
+        // properties, and 'c' does not exist in type '{b: number}'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBDeAjOA7ArgW0SATgXwCgCoIBeBPCCAemogFEccB7HCAFQGUAmAdgBYAjHAAKLAA64wATwgByRHIgBLAM4QMa1cpQBzFSggzJ8+HjkEqVq7QiI0kHCACOaZU4AmBo9JNykqJjY+HIAdEQk5PCWdnCCADQxAMZw3FS2jCxsXNwAzNzccOy+IKbIEOhYuADcECkVQbjmKuoozJBQqtq6KFCIoASU1ul0YMw+fgENVSGhEADyiABWIEmQwMpguFDAGlCyzCjAsqqSScoAZrIA1m0A7igxwzR04hJSyiCq8dAoXnJJJQeZhfCrtCAgAAeakgOgmpX85UqwXMoSAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Пример с объявлением переменной без присваивания значения</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: number
+let b = a * 3  // Error TS2454: Variable 'a' is used
+               // before being assigned.
+let i
+let j = i * 3  // Error TS2532: Object is possibly
+               // 'undefined'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBB2BXAtgIxAJwFCkqiAvNBAFQQDMEEA9NRAKIYYD2GEAKgMoBMALAKy84ANSgYAllFSgIAciiyI4gM4REykABMsVXXv0066AGasQEdOPgBzaMuXjr8LQDoc4Je8gArQktIUVLQMTKwcPPzk3HAA8qjeIADGkCoQAA7M9uLSAJ46BgWGcojwmiDGVlqybkA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Опциональные свойства объекта</h3>
+            <pre><code class="hljs" data-trim contenteditable>
+let a: {
+  b: number
+  c?: string
+  [key: number]: boolean
+}
+
+a = {b: 1}
+a = {b: 1, c: undefined}
+a = {b: 1, c: 'd'}
+a = {b: 1, 10: true}
+a = {b: 1, 10: true, 20: false}
+a = {10: true}          // Error TS2741: Property 'b' is missing in type
+                        // '{10: true}'.
+a = {b: 1, 33: 'red'}   // Error TS2741: Type 'string' is not assignable
+                        // to type 'boolean'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBDeAoCEBGcB2BXAtqkATshAMYD8cAzmAQJYYDmxA2gNYgCemu+BAunFQB7IaCgZEAX0SIoEALwJ0EAIzS5i+MpUAaUnCwYAJiABm9EEfUKlcXfogByI4+ubtelQAY4NLCDdbVU8fCD8QPQAmUNMoYEoA2Rt4b18Cf0kULOyIAHpciABRAgIhAggAFQBlSIB2ABYVOAAFUoAHQjAOJ1RHCFpKCBwBynoGfowwjg7iHLn57PynFNDwyUcAOiT3Oz0AZj24RwJLVyyl4tLy6rrGuArpkCdqOkY+gYgMIUgoSlGGDBQVCgWYLMGLApgIRTDo9ERiDCbIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Индексные сигнатуры</h3>
+            <p>Для данного объекта все ключи типа T должны иметь значения типа U.</p>
+            <p>Ключи могут быть number или string</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let airplaneSeatingAssignments: {
+  [seatNumber: string]: string
+} = {
+  '34D': 'Boris Cherny',
+  '34E': 'Bill Gates'
+}
+
+airplaneSeatingAssignments['34B'] = 167
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhglgTgB2FAdiAyiKYYoOYCCAzkTHigLYgphEBcEA3gFAQQDaRWYAcgK4UARiDgMiYOLjwBdMRKnMAvhAC8TVhADkAZgAsAEU0NNAIQD2kohADCACxEoAnpoA0GnboCiRrSZjBgCABxbBAiTSVmZlhEZDRMbCliUnIqGiJ2DxNNaVUIAEYANgB2IA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Свойства только для чтения</h3>
+            <pre><code class="hljs" data-trim contenteditable>
+let user: {
+  readonly firstName: string
+} = {
+  firstName: 'abby'
+}
+
+user.firstName // string
+user.firstName =
+  'abbey with an e' // Error TS2540: Cannot assign to 'firstName' because it
+                    // is a read-only property.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBArgziBOAuCBvAUBC8QEMAmA9gHbACeEAZgJbwxgByOAtiMnfFUQOZoC+EAXlQZKNOoxbIA5DgBGs0lL5o0sBADpqtBsxAQA9PojtOPNfE1idLQSJnyQ5AO5UwACwg4iEEFINGAUXh4AngIABUAZQAmAFYAFgAGZABhLyICSBwYGCoubzACCCktcV0-WRAAYxw1CFcRTCbmlubDephPLFw8AFpiMggABxChhDBSdSA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>{a: string} vs {} vs object vs Object</h3>
+            <ol>
+              <li>Литерал объекта (например, {a: string}) также называется формой. Приоритет на использование.</li>
+              <li>object - можно использовать для проверки на объект, когда тип полей не имеет значения.</li>
+              <li>Пустой литерал объекта ({}) - можно присвоить значение любого типа кроме null и undefined. Желательно избегать.</li>
+              <li>Object - в отличие от пустого литера объекта проверка на уровне прототипа Object. Желательно избегать.</li>
+            </ol>
+            <img src="img/object.png" height="300"/>
+          </section>
+        </section>
 
       </div>
     </div>
