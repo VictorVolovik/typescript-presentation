@@ -67,6 +67,9 @@
             <li>
               <a href="#/12">Типизация объектов</a>
             </li>
+            <li>
+              <a href="#/13">Алиасы, объеденения и пересечения типов</a>
+            </li>
           </ul>
         </section>
 
@@ -661,9 +664,67 @@ user.firstName =
               <li>Литерал объекта (например, {a: string}) также называется формой. Приоритет на использование.</li>
               <li>object - можно использовать для проверки на объект, когда тип полей не имеет значения.</li>
               <li>Пустой литерал объекта ({}) - можно присвоить значение любого типа кроме null и undefined. Желательно избегать.</li>
-              <li>Object - в отличие от пустого литера объекта проверка на уровне прототипа Object. Желательно избегать.</li>
+              <li>Object - в отличие от пустого литерала объекта проверка на уровне прототипа Object. Желательно избегать.</li>
             </ol>
             <img src="img/object.png" height="300"/>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Алиасы, объеденения и пересечения типов</h2>
+            <p>Возможные операции над типами.</p>
+            <h3>Алиасы типов</h3>
+            <p>Возможность объявить алиас для типа. Алиас всегда можно заменить на тип, на который он указывает.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+type Age = number
+
+type Person = {
+  name: string
+  age: Age
+}
+
+let age: Age = 55
+
+let driver: Person = {
+  name: 'James May',
+  age: age
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAgg5tAvFAdgVwLYCMICcBQ+okUACngM4D2KUyA3vlKgIYYQBcUFwuAlijhMoLBF3gR8AX0IAbCMBFjYCOlACs6uQqgATfgDc8Xcrmq0GwlG05QA5ACkbFKAFkWIOwBpho23+l8IA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Алиасы нельзя переопределять, они имеют блочную область видимости.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+type Color = 'red'
+type Color = 'blue'  // Error TS2300: Duplicate identifier 'Color'.
+
+let x = Math.random() < .5
+
+if (x) {
+  type Color = 'blue'  // This shadows the Color declared above.
+  let b: Color = 'blue'
+} else {
+  let c: Color = 'red'
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAwg9gGzgJygXigcmRAJpgKFElkRXSwCMEBXCTKKAeiagFFllyAVAZQCYAzAAZhALigARGmAQBLAMYBDYNDm4IAO2ByAZnIipM8JMkwA6AgQQRgUAB4UAsioAW55Es244AWwAUAJRQADxQ5gCsVnpQ-vbBAN4EjMTQJuQYmNR0DMys3K5yAM5QRa5KPgDuJcCuaWSoGgoISji4UEqUcABuEJaMNnaUEumomdn0BAC+UBAIRdBJA7ZQCiMNFNh4hFMEQA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
           </section>
         </section>
 
