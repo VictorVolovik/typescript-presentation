@@ -68,7 +68,10 @@
               <a href="#/12">Типизация объектов</a>
             </li>
             <li>
-              <a href="#/13">Алиасы, объеденения и пересечения типов</a>
+              <a href="#/13">Алиасы типов</a>
+            </li>
+            <li>
+              <a href="#/14">Объеденение и пересечение типов</a>
             </li>
           </ul>
         </section>
@@ -672,9 +675,7 @@ user.firstName =
 
         <section>
           <section>
-            <h2>Алиасы, объеденения и пересечения типов</h2>
-            <p>Возможные операции над типами.</p>
-            <h3>Алиасы типов</h3>
+            <h2>Алиасы типов</h2>
             <p>Возможность объявить алиас для типа. Алиас всегда можно заменить на тип, на который он указывает.</p>
             <pre><code class="hljs" data-trim contenteditable>
 type Age = number
@@ -726,6 +727,39 @@ if (x) {
               </a>
             </p>
           </section>
+        </section>
+
+        <section>
+          <h2>Объеденение и пересечение типов</h2>
+          <p>Описание отношения типов</p>
+          <img src="img/union_vs_intersection.png" height="100"/>
+          <pre><code class="hljs" data-trim contenteditable>
+type Cat = {name: string, purrs: boolean}
+type Dog = {name: string, barks: boolean, wags: boolean}
+type CatOrDogOrBoth = Cat | Dog
+type CatAndDog = Cat & Dog
+
+// Cat
+let a: CatOrDogOrBoth = { name: 'Bonkers', purrs: true }
+
+// Dog
+a = { name: 'Domino', barks: true, wags: true }
+
+// Both
+a = { name: 'Donkers', barks: true, purrs: true, wags: true }
+
+// Both
+let b: CatAndDog = { name: 'Donkers', barks: true, purrs: true, wags: true }
+          </code></pre>
+          <p>
+            <a
+              href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAwghsKBeKBvAdnAthAXFAZ2ACcBLdAcwBoowBXY4g-AIwHs2AbCOdAXwBQoSFAAibCsjSYc+ImUo0WcYgGtmUdlx7oaAdzgUNW7r0HDo8YAHli4irYBCbYAAspVqAB8xEoeEsEAEF0ABN7DwQoADJfCgEBAHpE2AQBbkQ4fCtbeycXdxRUKBk8KAByZ3RVCCZymnpGDRI6aEEklPsBOCli0vxy8SxyNnrNFXV8Foh9Q2biVqh25KhnN27ekuwywbZq2oIx5TV51oaGJimFmagDIyvF5ZS113SIRBZs4LCIoq3ZCrifZ1JQTU43RqXKDTWb3aHXJZAA"
+              target="_blank"
+              rel="noopener"
+              >
+              TS Playground
+            </a>
+          </p>
         </section>
 
       </div>
