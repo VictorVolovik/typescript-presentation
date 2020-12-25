@@ -771,6 +771,69 @@ let b: CatAndDog = { name: 'Donkers', barks: true, purrs: true, wags: true }
           </p>
         </section>
 
+        <section>
+          <section>
+            <h2>Типизация массивов</h2>
+            <p>Как и в JS поддерживают конкатенацию, добавление и удаление элементов, поиск итп итд</p>
+            <pre><code class="hljs" data-trim contenteditable>
+  let a = [1, 2, 3]           // number[]
+  var b = ['a', 'b']          // string[]
+  let c: string[] = ['a']     // string[]
+  let d = [1, 'a']            // (string | number)[]
+  const e = [2, 'b']          // (string | number)[]
+
+  let f = ['red']
+  f.push('blue')
+  f.push(true)                // Error TS2345: Argument of type 'true' is not
+                              // assignable to parameter of type 'string'.
+
+  let g = []                  // any[]
+  g.push(1)                   // number[]
+  g.push('red')               // (string | number)[]
+
+  let h: number[] = []        // number[]
+  h.push(1)                   // number[]
+  h.push('red')               // Error TS2345: Argument of type '"red"' is not
+                              // assignable to parameter of type 'number'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EG0CMAaCAmNBmAuhfBhEA9MRAHYCuAtgEYgBOCOAUAG5QMS1yIDkUPmj60+eIoVIQAzmAYBLcgHNmLUJADGALhlzFKvPAQCxRKbIXLV6iABNeyYYPETJZABQX9EAD4Ua9AwAlKoaAPbkshAgDpgQIqau+FKeesq+-nSMIaxq4BAAZg58DCC2YiwFAHQADpTSABbuIsCUIHxBlbX1TXJtQUlJUgCiDAxhXAAqAMroWAAsAKw6AIIMSjQg5JBhRWAAnjUxfH3tEPLSFGFgLIN3g1JQ0tLySuRQtKAQYGEQNZxQajgRgQXbfQ7HLzKPhVFh5SBKBwue5uaDkfaqJTdRruJADFESKRULJMVhYuo4kplDoE5IeKGIvzEwI5OE2Bo6ZmMZhIoZkLmklgNbFNPG0sz8gLc1jCilNKnlfEEkZjCYQGZzJardabbagvYQ+IAIlKtiNfHOl3I11u4pRj2er3enxiPz+AKBYBBYIOR3iAphLCAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Однородность</h3>
+            <p>Рекомендуется придерживаться однородности для массивов, когда каждый элемент одного типа.</p>
+            <p>После того как массив покинул какую-либо область видимости, его тип финализируется.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+function buildArray() {
+  let a = []                // any[]
+  a.push(1)                 // number[]
+  a.push('x')               // (string | number)[]
+  return a
+}
+
+let myArray = buildArray()  // (string | number)[]
+myArray.push(true)          // Error 2345: Argument of type 'true' is not
+                            // assignable to parameter of type 'string | number'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAIxDANgEwIICdcCGAngBQCUiA3gFCKLoCmUiBiAvIgNoC6df-AugHohLMER60WAOgAOIAM4ALEgEYKgzXxGIwIALbIGuSXQJzFKgOQAPKxq0CdJBVFwwwAc0QAfXQaNcMlNEXCYQXCQCagBfampGZn0iPEIidhQ0LFTicmFRFzcPbz89Q2Ng7mpknKILZRI3EAYHTR0AUXw4XEQAJgBmABYAVgAuRDxPAwYwZjhgRCgiWQZEKyaGK0QYBV04KClHI7bRAgUFGE8wAmRGRbhEWQJCfSZjRHnF5dWrV3cvXz+cq4KzSIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
       </div>
     </div>
 
