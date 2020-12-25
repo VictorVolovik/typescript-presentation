@@ -32,42 +32,57 @@
         </section>
 
         <section>
-          <h2>Содержание:</h2>
-          <ul>
-            <li>
-              <a href="#/2">Type Safety - Типобезопасность</a>
-            </li>
-            <li>
-              <a href="#/3">Обзор TypeScript</a>
-            </li>
-            <li>
-              <a href="#/4">Типы</a>
-            </li>
-            <li>
-              <a href="#/5">any</a>
-            </li>
-            <li>
-              <a href="#/6">unknown</a>
-            </li>
-            <li>
-              <a href="#/7">boolean</a>
-            </li>
-            <li>
-              <a href="#/8">number</a>
-            </li>
-            <li>
-              <a href="#/9">bigint</a>
-            </li>
-            <li>
-              <a href="#/10">string</a>
-            </li>
-            <li>
-              <a href="#/11">symbol</a>
-            </li>
-            <li>
-              <a href="#/12">Типизация объектов</a>
-            </li>
-          </ul>
+          <section>
+            <h2>Содержание:</h2>
+            <ul>
+              <li>
+                <a href="#/3">Type Safety - Типобезопасность</a>
+              </li>
+              <li>
+                <a href="#/4">Обзор TypeScript</a>
+              </li>
+              <li>
+                <a href="#/5">Типы</a>
+              </li>
+              <li>
+                <a href="#/6">any</a>
+              </li>
+              <li>
+                <a href="#/7">unknown</a>
+              </li>
+              <li>
+                <a href="#/8">boolean</a>
+              </li>
+              <li>
+                <a href="#/9">number</a>
+              </li>
+              <li>
+                <a href="#/10">bigint</a>
+              </li>
+              <li>
+                <a href="#/11">string</a>
+              </li>
+              <li>
+                <a href="#/12">symbol</a>
+              </li>
+              <li>
+                <a href="#/13">Типизация объектов</a>
+              </li>
+              <li>
+                <a href="#/14">Алиасы типов</a>
+              </li>
+              <li>
+                <a href="#/15">Объеденение и пересечение типов</a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li>
+                <a href="#/16">Типизация массивов</a>
+              </li>
+            </ul>
+          </section>
         </section>
 
         <section>
@@ -661,9 +676,161 @@ user.firstName =
               <li>Литерал объекта (например, {a: string}) также называется формой. Приоритет на использование.</li>
               <li>object - можно использовать для проверки на объект, когда тип полей не имеет значения.</li>
               <li>Пустой литерал объекта ({}) - можно присвоить значение любого типа кроме null и undefined. Желательно избегать.</li>
-              <li>Object - в отличие от пустого литера объекта проверка на уровне прототипа Object. Желательно избегать.</li>
+              <li>Object - в отличие от пустого литерала объекта проверка на уровне прототипа Object. Желательно избегать.</li>
             </ol>
             <img src="img/object.png" height="300"/>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Алиасы типов</h2>
+            <p>Возможность объявить алиас для типа. Алиас всегда можно заменить на тип, на который он указывает.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+type Age = number
+
+type Person = {
+  name: string
+  age: Age
+}
+
+let age: Age = 55
+
+let driver: Person = {
+  name: 'James May',
+  age: age
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAgg5tAvFAdgVwLYCMICcBQ+okUACngM4D2KUyA3vlKgIYYQBcUFwuAlijhMoLBF3gR8AX0IAbCMBFjYCOlACs6uQqgATfgDc8Xcrmq0GwlG05QA5ACkbFKAFkWIOwBpho23+l8IA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Алиасы нельзя переопределять, они имеют блочную область видимости.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+type Color = 'red'
+type Color = 'blue'  // Error TS2300: Duplicate identifier 'Color'.
+
+let x = Math.random() < .5
+
+if (x) {
+  type Color = 'blue'  // This shadows the Color declared above.
+  let b: Color = 'blue'
+} else {
+  let c: Color = 'red'
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAwg9gGzgJygXigcmRAJpgKFElkRXSwCMEBXCTKKAeiagFFllyAVAZQCYAzAAZhALigARGmAQBLAMYBDYNDm4IAO2ByAZnIipM8JMkwA6AgQQRgUAB4UAsioAW55Es244AWwAUAJRQADxQ5gCsVnpQ-vbBAN4EjMTQJuQYmNR0DMys3K5yAM5QRa5KPgDuJcCuaWSoGgoISji4UEqUcABuEJaMNnaUEumomdn0BAC+UBAIRdBJA7ZQCiMNFNh4hFMEQA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h2>Объеденение и пересечение типов</h2>
+          <p>Описание отношения типов</p>
+          <img src="img/union_vs_intersection.png" height="100"/>
+          <pre><code class="hljs" data-trim contenteditable>
+type Cat = {name: string, purrs: boolean}
+type Dog = {name: string, barks: boolean, wags: boolean}
+type CatOrDogOrBoth = Cat | Dog
+type CatAndDog = Cat & Dog
+
+// Cat
+let a: CatOrDogOrBoth = { name: 'Bonkers', purrs: true }
+
+// Dog
+a = { name: 'Domino', barks: true, wags: true }
+
+// Both
+a = { name: 'Donkers', barks: true, purrs: true, wags: true }
+
+// Both
+let b: CatAndDog = { name: 'Donkers', barks: true, purrs: true, wags: true }
+          </code></pre>
+          <p>
+            <a
+              href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAwghsKBeKBvAdnAthAXFAZ2ACcBLdAcwBoowBXY4g-AIwHs2AbCOdAXwBQoSFAAibCsjSYc+ImUo0WcYgGtmUdlx7oaAdzgUNW7r0HDo8YAHli4irYBCbYAAspVqAB8xEoeEsEAEF0ABN7DwQoADJfCgEBAHpE2AQBbkQ4fCtbeycXdxRUKBk8KAByZ3RVCCZymnpGDRI6aEEklPsBOCli0vxy8SxyNnrNFXV8Foh9Q2biVqh25KhnN27ekuwywbZq2oIx5TV51oaGJimFmagDIyvF5ZS113SIRBZs4LCIoq3ZCrifZ1JQTU43RqXKDTWb3aHXJZAA"
+              target="_blank"
+              rel="noopener"
+              >
+              TS Playground
+            </a>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h2>Типизация массивов</h2>
+            <p>Как и в JS поддерживают конкатенацию, добавление и удаление элементов, поиск итп итд</p>
+            <pre><code class="hljs" data-trim contenteditable>
+  let a = [1, 2, 3]           // number[]
+  var b = ['a', 'b']          // string[]
+  let c: string[] = ['a']     // string[]
+  let d = [1, 'a']            // (string | number)[]
+  const e = [2, 'b']          // (string | number)[]
+
+  let f = ['red']
+  f.push('blue')
+  f.push(true)                // Error TS2345: Argument of type 'true' is not
+                              // assignable to parameter of type 'string'.
+
+  let g = []                  // any[]
+  g.push(1)                   // number[]
+  g.push('red')               // (string | number)[]
+
+  let h: number[] = []        // number[]
+  h.push(1)                   // number[]
+  h.push('red')               // Error TS2345: Argument of type '"red"' is not
+                              // assignable to parameter of type 'number'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhhC8EG0CMAaCAmNBmAuhfBhEA9MRAHYCuAtgEYgBOCOAUAG5QMS1yIDkUPmj60+eIoVIQAzmAYBLcgHNmLUJADGALhlzFKvPAQCxRKbIXLV6iABNeyYYPETJZABQX9EAD4Ua9AwAlKoaAPbkshAgDpgQIqau+FKeesq+-nSMIaxq4BAAZg58DCC2YiwFAHQADpTSABbuIsCUIHxBlbX1TXJtQUlJUgCiDAxhXAAqAMroWAAsAKw6AIIMSjQg5JBhRWAAnjUxfH3tEPLSFGFgLIN3g1JQ0tLySuRQtKAQYGEQNZxQajgRgQXbfQ7HLzKPhVFh5SBKBwue5uaDkfaqJTdRruJADFESKRULJMVhYuo4kplDoE5IeKGIvzEwI5OE2Bo6ZmMZhIoZkLmklgNbFNPG0sz8gLc1jCilNKnlfEEkZjCYQGZzJardabbagvYQ+IAIlKtiNfHOl3I11u4pRj2er3enxiPz+AKBYBBYIOR3iAphLCAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Однородность</h3>
+            <p>Рекомендуется придерживаться однородности для массивов, когда каждый элемент одного типа.</p>
+            <p>После того как массив покинул какую-либо область видимости, его тип финализируется.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+function buildArray() {
+  let a = []                // any[]
+  a.push(1)                 // number[]
+  a.push('x')               // (string | number)[]
+  return a
+}
+
+let myArray = buildArray()  // (string | number)[]
+myArray.push(true)          // Error 2345: Argument of type 'true' is not
+                            // assignable to parameter of type 'string | number'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAIxDANgEwIICdcCGAngBQCUiA3gFCKLoCmUiBiAvIgNoC6df-AugHohLMER60WAOgAOIAM4ALEgEYKgzXxGIwIALbIGuSXQJzFKgOQAPKxq0CdJBVFwwwAc0QAfXQaNcMlNEXCYQXCQCagBfampGZn0iPEIidhQ0LFTicmFRFzcPbz89Q2Ng7mpknKILZRI3EAYHTR0AUXw4XEQAJgBmABYAVgAuRDxPAwYwZjhgRCgiWQZEKyaGK0QYBV04KClHI7bRAgUFGE8wAmRGRbhEWQJCfSZjRHnF5dWrV3cvXz+cq4KzSIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
           </section>
         </section>
 
