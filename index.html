@@ -81,6 +81,9 @@
               <li>
                 <a href="#/16">Типизация массивов</a>
               </li>
+              <li>
+                <a href="#/17">null, undefined, void и never</a>
+              </li>
             </ul>
           </section>
         </section>
@@ -923,19 +926,58 @@ as.push(6)           // Error TS2339: Property 'push' does not
         </section>
 
         <section>
-          <h2></h2>
-          <p></p>
-          <pre><code class="hljs" data-trim contenteditable>
-          </code></pre>
-          <p>
-            <a
-              href=""
-              target="_blank"
-              rel="noopener"
-              >
-              TS Playground
-            </a>
-          </p>
+          <section>
+            <h2>null, undefined, void и never</h2>
+            <p>TS включает следующие специальные значения, имеющие соответствующие типы: null, undefined, void и never.</p>
+            <p><b>null</b> - отсутствие значения.</p>
+            <p><b>undefined</b> - значение для переменной, которой еще не было присвоено значение.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+  // (a) A function that returns a number or null
+  function a(x: number) {
+    if (x < 10) {
+      return x
+    }
+    return null
+  }
+
+  // (b) A function that returns undefined
+  function b() {
+    return undefined
+  }
+            </code></pre>
+          </section>
+          <section>
+            <p><b>void</b> - тип для функций, которые ничего не возвращают.</p>
+            <p><b>never</b> - тип для функций, которые никогда ничего не возвращают (выкидывают эксепшен или работают бесконечно).</p>
+            <pre><code class="hljs" data-trim contenteditable>
+// (c) A function that returns void
+function c() {
+  let a = 2 + 2
+  let b = a * a
+}
+
+// (d) A function that returns never
+function d() {
+  throw TypeError('I always error')
+}
+
+// (e) Another function that returns never
+function e() {
+  while (true) {
+    console.log("forever and ever")
+  }
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEAoEMEpQQVAMwK4DsDGAXAlge1aJgBaSagBOAppsuagM6iSirIC2ARpeaLj6wBsBAKBQYc+JuAAeALhbsu5WAG9hoUNkQRpoADygAjAAZV6jRWq0C08wF9zVGnQVDhD4SAgdYCMVjwCYlJLZwZQNAATSkRsVEpI0TQAyQ5wMw0nawjUaNj4xI8vcHRfJGSJIJIyLLpGADdcbET-StB0dNA1DQFqJlAAXlAAJlAAahHzXrIOQf6AKiZ3YU8wcEiy1sDCatDrRnj67iTxbcjO7p3yXAB3UAAVAE8AB0oAUXJr8nAAcgBJJgCG6QR6MbhfH7QZarCCUXyoXDEbjlU6SYI1Kx1FiUI7kE4pAiUC7mG5EbC9CCYcjIOFdcwadD4ei4XoAOgEuAA5uAAESIPg45GQXKgQXkHlQjQOOxAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
         </section>
 
       </div>
