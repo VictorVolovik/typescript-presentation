@@ -84,6 +84,9 @@
               <li>
                 <a href="#/17">null, undefined, void и never</a>
               </li>
+              <li>
+                <a href="#/18">Перечисления (enums)</a>
+              </li>
             </ul>
           </section>
         </section>
@@ -971,6 +974,104 @@ function e() {
             <p>
               <a
                 href="https://www.typescriptlang.org/play?#code/PTAEAoEMEpQQVAMwK4DsDGAXAlge1aJgBaSagBOAppsuagM6iSirIC2ARpeaLj6wBsBAKBQYc+JuAAeALhbsu5WAG9hoUNkQRpoADygAjAAZV6jRWq0C08wF9zVGnQVDhD4SAgdYCMVjwCYlJLZwZQNAATSkRsVEpI0TQAyQ5wMw0nawjUaNj4xI8vcHRfJGSJIJIyLLpGADdcbET-StB0dNA1DQFqJlAAXlAAJlAAahHzXrIOQf6AKiZ3YU8wcEiy1sDCatDrRnj67iTxbcjO7p3yXAB3UAAVAE8AB0oAUXJr8nAAcgBJJgCG6QR6MbhfH7QZarCCUXyoXDEbjlU6SYI1Kx1FiUI7kE4pAiUC7mG5EbC9CCYcjIOFdcwadD4ei4XoAOgEuAA5uAAESIPg45GQXKgQXkHlQjQOOxAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Перечисления (enums)</h2>
+            <p>Перечисление - тип данных, чьё множество значений представляет собой ограниченный список идентификаторов.</p>
+            <p>Сущесвует два варианта перечислений: строки к строкам, строки к числам.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+enum Language {
+  English,
+  Spanish,
+  Russian
+}
+
+enum Car {
+  Ferrari = 0,
+  Porsche = 1,
+  McLaren = 2
+}
+
+let myFirstLanguage = Language.Russian      // Language
+let myFavoriteCar = Car['McLaren']          // Car
+let unsafeLanguage = Language.German        // Property 'German'
+                                            // does not exist on type 'typeof Language'.
+
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?ssl=1&ssc=1&pln=17&pc=1#code/KYOwrgtgBAMghiA5mOjhQN4CgpQKJIA2AlgM4AWANDlAMoAOCZVNASmKacQlgL5ZZQkKAGE4AJ0w0AYsHHiJxKAF4oABmq4ACgHtxpAMbl0qgIyaoAWQPxxoFVABMfAYWAAXKBACe04vvd4JBQ0ByDkVGAAOnZObhBcRKgAemTYBAi0LDdPH2k4ADc9YndgMUlVcoBtAHJrW1AagF0k1pS08uyPKDAQUjgAM2BwkJN04MiogHE5CAQ23FSoLXEdejl3bygamfE5kBqoGgWT07OTpYATHWBSKBAdT2AADzJPHQTN9e2v4B0B8aZYA1KJYIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Пример с цветами.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+enum Color {
+  Red = '#c10000',
+  Blue = '#007ac1',
+  Pink = 0xc10050,        // A hexadecimal literal
+  White = 255             // A decimal literal
+}
+
+let red = Color.Red       // Color
+let pink = Color.Pink     // Color
+
+let b = Color.Green       // Error TS2339: Property 'Green' does not exist
+                          // on type 'typeof Color'.
+let c = Color[0]          // string
+let d = Color[6]          // string (!!!)
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/KYOwrgtgBAwg9gGzgJygbwFBSgJWAEygF4oByAYgGMBGABnttIBosoAhBMYYs8+gdgCGNZqwAKASxABrHrQAeNegFZaTbBo0B6LVACCUABbB5g-MEoSIghFAQSALsGQ3WAdUOPuJAEzLlmoGaOvpQ5pbWtvZOLggYAL4YGAjADlDIBDzwSMgAdHiEQSHZKMmpUAAOUrIkJXmSMoHFiKVlaQBGWS15AOIZoEFQIQCiyMgoUAAqAMo+AMxzAJwAXFBi4xXODgCeZH3AoKRhcMAAzlAgcGkmEqcOrIOPTyFwIFA7m2QfwHAAZrDdUi5NpQShdHIAbVoAF0nkNdHdkFIAOYgwi1boQgBssOeCIcSJAyKgAAoAIQUgCUGCAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Более безопасно использовать const enum.</p>
+            <pre><code data-trim contenteditable>
+const enum Language {
+  English,
+  Spanish,
+  Russian
+}
+
+// Accessing a valid enum key
+let a = Language.English  // Language
+
+// Accessing an invalid enum key
+let b = Language.Tagalog  // Error TS2339: Property 'Tagalog' does not exist
+                          // on type 'typeof Language'.
+
+// Accessing a valid enum value
+let c = Language[0]       // Error TS2476: A const enum member can only be
+                          // accessed using a string literal.
+
+// Accessing an invalid enum value
+let d = Language[6]       // Error TS2476: A const enum member can only be
+                          // accessed using a string literal.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/MYewdgzgLgBApmArgWxgGQIZgOaI9uGAbwCgYYBRHAGwEsIALAGjJgGUAHLe51gJUQQItLCQC+JEgHopMAILBgcIbRwwMMAG4Y6AE3hJUAazgBPEtTiwNAXnRZc+OADoq2Oo3Iz7OPAUneCkoqalgwqtp6BigwJuaWsABGMHaYvk7OACr4OiDYXrIUAE5FIEUwmWwATADMNQCcAFwwAAqlHHBFUKYwAOTZ2LnYvTC6IMowYCCwcAAe9FCs5Msrq2sr3uAw3R19O3AgAGY+jgS9zgGyQcrCoVo6tPoIMZGIcBZWMMApJ35wANoABgAuutvMVSuVKlUACwAdgAbM05F9wNBoqhkHBkIlOl8wuBqD1cUt1mSyd4MIobnB9IJVPkNNAigyYHQoJ0dBdpFdqSFGWBwmBIo8MfdqG8PrB9KkHH9-gjQWtwSUyhVqvCkfJUZAZoYYFicXjgASwESYCTyVawbIqcEILSYPS7szWezOdRnEA"
                 target="_blank"
                 rel="noopener"
                 >
