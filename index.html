@@ -832,6 +832,110 @@ myArray.push(true)          // Error 2345: Argument of type 'true' is not
               </a>
             </p>
           </section>
+          <section>
+            <h3>Кортежи (tuples)</h3>
+            <p>Кортежи являются подтипом массивов, имеют фиксированную длину, каждый элемент за конкретным индексом имеет определенный тип. Типы должны быть обозначены в момент объявления.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+  let a: [number] = [1]
+
+  // A tuple of [first name, last name, birth year]
+  let b: [string, string, number] = ['malcolm', 'gladwell', 1963]
+
+  b = ['queen', 'elizabeth', 'ii', 1926]  // Error TS2322: Type 'string' is not
+                                          // assignable to type 'number'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBDaA7ArgWwEYgE4F0IF4EBGHAKFIHoKIBBCMZAB1AgHsAzBdgSywGdIiKKhAAaCMCgCIQkePS8wACwgBPEFFylQkdHHgCs3RAHNxh42ZlpMuAggDkqKMADGrYKgfiHJyQBMAdxBgYG8IIgBOADYAZjJSdHt4BwBHZBAQRHCHEO4ALyhMZRzubnCogCZovAgqCABRLCxWLAgAFQBlStjKyrh21UYQCAcLUwcIbj4ZVjBSCEWl5ZXVtfXl+qk+bhMhdBYwVnohkYcUDGwHADogA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Кортежи поддерживают опциональные элементы.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+// An array of train fares, which sometimes vary depending on direction
+let trainFares: [number, number?][] = [
+  [3.75],
+  [8.25, 7.70],
+  [10.50]
+]
+
+// Equivalently:
+let moreTrainFares: ([number] | [number, number])[] = [
+  // ...
+]
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEEEDtQQwJzjAnqA9gM1AF0QS2uvAKYDOANKAO4AWuAxtaCagLZFa5smgBu8KAEyIAHIpAH4A5mmgS4ROh1SQAUABt22PJABixEgC5QAbUgBXFgCMicCuas2A-AF1jz0AF4TK0CYDMAHQA7ACszmQ+JgAcAQBMIRRBwQAM4ZHGAIzJASGpKs4qKiCgAKIAjma4fBqQWGpIBuqaLKjyACraevKGoAAUphbWcO4APib2Q3aDNs4AlG6e3r7FAav5QA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Кортежи поддерживают оставшиеся (rest) параметры.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+// A list of strings with at least 1 element
+let friends: [string, ...string[]] = ['Sara', 'Tali', 'Chloe', 'Claire']
+
+// A heterogeneous list
+let list: [number, boolean, ...string[]] = [1, false, 'a', 'b', 'c']
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEEFQGwSwZwC6gPYDNSIE4wHYHM5QB3GBAC1AEMkoBTSxUARlFroFtacEAoOpVNi4ATOAC5QAbSy48AGlAA6ZTPySAuutABeKQHIAypUyU9CvQBVKsM6D0BhMlGS1bDqJRiZX6njxAQoGS0CLSYyHhctMgAroSwiHwh0PAIEpI4MewARmEK2cjIdJQ4CsqKqngaWrqSTAqo1nC05qbm2W4AxnrqQA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Массивы и кортежи только для чтения</h3>
+            <p>Поддержка ограничения на мутации с помощью readonly.</p>
+            <pre><code class="hljs" data-trim contenteditable>
+let as: readonly number[] = [1, 2, 3]     // readonly number[]
+let bs: readonly number[] = as.concat(4)  // readonly number[]
+let three = bs[2]                         // number
+as[4] = 5            // Error TS2542: Index signature in type
+                     // 'readonly number[]' only permits reading.
+as.push(6)           // Error TS2339: Property 'push' does not
+                     // exist on type 'readonly number[]'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgzgXBATiKATA9gO2ATwpgVwFsAjERAbQF0IBeCCgRgBoIAmVgZhol4gHp+SFBmx5CpctQBQoSCXjC0WXPmJlKNerAB0AYyx6oYABQAWAJS9BS0aokaZciGAAWyEHQgKKbHnwDAoMCbB3JpWAozLQgAVmCQoQBRRER0RAgAFQBlNlizNgQASUxUEAAPCBgASwBzTGMCZAhqzBccAAcQaQTegJsAcmRlMTVJTQGIFTwuxCJqsBhbVtqdCJgdDoIYVxMANis+mxS0jJy2Tk4ATgQABTTZsDwBrZ3JjBAlzHQwHr6joQVaowSBYdpdCBDETTMaOKgDHRAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h2></h2>
+          <p></p>
+          <pre><code class="hljs" data-trim contenteditable>
+          </code></pre>
+          <p>
+            <a
+              href=""
+              target="_blank"
+              rel="noopener"
+              >
+              TS Playground
+            </a>
+          </p>
         </section>
 
       </div>
