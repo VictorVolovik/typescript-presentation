@@ -87,6 +87,12 @@
               <li>
                 <a href="#/18">Перечисления (enums)</a>
               </li>
+              <li>
+                <a href="#/19">Функции</a>
+              </li>
+              <li>
+                <a href="#/20">Рекомендуемые материалы</a>
+              </li>
             </ul>
           </section>
         </section>
@@ -1081,6 +1087,227 @@ let d = Language[6]       // Error TS2476: A const enum member can only be
           </section>
         </section>
 
+        <section>
+          <section>
+            <h2>Функции</h2>
+            <pre><code data-trim contenteditable>
+  function add(a: number, b: number): number {
+    return a + b
+  }
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAQwCaoBTIFyLCAWwCMBTAJwBpEjd9jyBKWw0sxAbwChFEySoQZJMkQBqapwC+QA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Способы объявления функций</h3>
+            <pre><code data-trim contenteditable>
+// Named function
+function greet(name: string) {
+  return 'hello ' + name
+}
+
+// Function expression
+let greet2 = function(name: string) {
+  return 'hello ' + name
+}
+
+// Arrow function expression
+let greet3 = (name: string) => {
+  return 'hello ' + name
+}
+
+// Shorthand arrow function expression
+let greet4 = (name: string) => 'hello ' + name
+
+// Function constructor
+let greet5 = new Function('name', 'return "hello " + name')
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEDkEMFsFMBNQDMCuA7AxgFwJYHs0AoVTXA0AcwCdZYsAKNGWALlAGcsqc0KBKUAG9CoUDSwoqaUAHIAFrAA2ivLNABqUEziEAvoUIhQAMXTZ802AA8ADjXbsLhRXUo06AJlABeZGbJojMxsnNy8AsKi4pLS8koqaprasHoGRgCCVFR4AO5+pBag1nawDk4uWG60WADMPqBBcCFcPPw+AHxCImJ0MbIKyqoyGlrMqYZgAMpyeFRYcpBoiJBZufnm5MX2jgTOrtTVACz1jawcLeEd-fFDI8lpYKYF5BgEoSjYs3uVB3QArPU0LA8k8NoEZMkZAAaWTRKSgABEAwSCLuzBkfCAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Опциальные параметры</h3>
+            <pre><code data-trim contenteditable>
+function log(message: string, userId?: string) {
+  let time = new Date().toLocaleTimeString()
+  console.log(time, message, userId || 'Not signed in')
+}
+
+log('Page loaded') // Logs "12:38:31 PM Page loaded Not signed in"
+log('User signed in', 'da763be') // Logs "12:38:31 PM User signed in da763be"
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAGzgcwBQFsCmBnPAQzRwC5E8oAnGMNAGkRDxyoEkATAfnMproCUiAN4AoRChxREsXIgC8iMDgDuiACKEoODAIB0UOABk4EQshwAVGLgDK1WpgHjEEBHjgW9qTLJyNcAmJ-JhZ2DkQAH0jEAHIAOThpPBg0ZQjaWOcAX1FRHwxYgAVglDhCDhwOLMQAelrEEzQ8RAAiAEYAJlIAZgAOXvbEIoBZYdLUCqrEROTU9MRaVvz0QoBVMIp56czGWI5CAHYANh6AIxwa+sb0Fo7u-sHhsY3WLbSdpAOT85xWoA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Параметры по умолчанию</h3>
+            <pre><code data-trim contenteditable>
+function log(message: string, userId = 'Not signed in') {
+  let time = new Date().toISOString()
+  console.log(time, message, userId)
+}
+
+log('User clicked on a button', 'da763be')
+log('User signed out')
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAGzgcwBQFsCmBnPAQzRwC5E8oAnGMNAGkRDxyoEkATRAXkQHIAcnCgUYaMDi60+ASkQBvAFCIUOEbFw9EEgO6IAIoSg4MMgHRQ4bAMoB5a9VqYZyxBAR44yHGdSYNOIy4BMSBTCzsHC4AvoqKfhh8AKoRbsgwEADWkogIiISIAEYgUJZgfIx8HIQA7ABsAMyFOLLx6IkprKLiOXAlskA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Оставшиеся (rest) параметры</h3>
+            <pre><code data-trim contenteditable>
+function sumVariadicSafe(...numbers: number[]): number {
+  return numbers.reduce((total, n) => total + n, 0)
+}
+
+sumVariadicSafe(1, 2, 3) // evaluates to 6
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAZxAWwGoEMBOMsAmMEAylsAKYAUAdHWOgEYU7IBciDazOA2gLoBKDlx6IA3gChEiHBSggcSUS2Q05BEBGpUocKFgA2AGk6DEAXgB8iPQcOIA1J1MAGQZIC+kyaky58IlJyagBGUwAmUwBmcwB6OMQKADcjECwoCmRbOEQANkkgA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Типизация this</h3>
+            <p>Использование this не рекомендуется. Флаг - noImplicitThis.</p>
+            <pre><code data-trim contenteditable>
+function fancyDate(this: Date) {
+  return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+}
+
+fancyDate.call(new Date) // evaluates to "6/13/2008"
+fancyDate() // Error TS2684: The 'this' context of type 'void' is
+            // not assignable to method's 'this' of type 'Date'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABMAhpAngERVApgCigAsYBnALkWzwEpEBvAKEUQCdcoRWkADAEnrEyAOgDmHagRoBfAPQChpMRwCyCYvhnzBJJeKgAxEABtjATVwpWm6T0bTGjVBknCIKU-jC4A7lRy4dLKyiLgAbh4gAaSIUHCIAEQAbLIAjADMsgBMAAw5ABwJTmgQWAGaiMGIAKKsrHCsiAAqAMpZSfkALJRNRLiIAOSKA4gQ6rgAHlCIcMCx6AAO-QNhcDAAJiNkzCy7eyxVYHDTKKSkMKJgKABGxv1xiAC2HERwmzFDuiOz80uDkgNhIwgA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Сигнатура фунции</h3>
+            <p>Возможность описать тип отдельно от функции.</p>
+            <pre><code data-trim contenteditable>
+type Log = (message: string, userId?: string) => void
+
+let log: Log = (
+  message,
+  userId = 'Not signed in'
+) => {
+  let time = new Date().toISOString()
+  console.log(time, message, userId)
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAMg9gcygXigCgLYQM7YIYIQBcU2wATgJYB2CANFAK7YTkCSAJgPwllW0BKFAD4oANziUOAKGkAbCMChzEJeElRoo0qFCy4CEBjqYt2HFFADkAOThLslBNQgWaV7UOSiA3tt0KSsCUWJYuAO5QACJ4wBBoAgB0wHBsAMoA8mkUNAgJJgDGcNTYcAqJKnnBWAz6+IQMzKycAtIAvtJAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h2>Рекомендуемые материалы</h2>
+          <ul>
+            <li>
+              <a
+                href="https://www.typescriptlang.org/docs"
+                target="_blank"
+                rel="noopener"
+                >
+                Официальная документация
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.typescriptlang.org/docs/handbook/intro.html"
+                target="_blank"
+                rel="noopener"
+                >
+                TypeScript Handbook
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://basarat.gitbook.io/typescript/getting-started"
+                target="_blank"
+                rel="noopener"
+                >
+                TypeScript Deep Dive
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/etroynov/typescript-book"
+                target="_blank"
+                rel="noopener"
+                >
+                + перевод
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/dzharii/awesome-typescript"
+                target="_blank"
+                rel="noopener"
+                >
+                Awesome TypeScript
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.piter.com/collection/best/product/professionalnyy-typescript-razrabotka-masshtabiruemyh-javascript-prilozheniy"
+                target="_blank"
+                rel="noopener"
+                >
+                Профессиональный TypeScript. Разработка масштабируемых JavaScript-приложений (перевод издательства Питер)
+              </a>
+            </li>
+          </ul>
+        </section>
+
       </div>
     </div>
 
@@ -1088,6 +1315,7 @@ let d = Language[6]       // Error TS2476: A const enum member can only be
     <script src="plugin/notes/notes.js"></script>
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
+
     <script>
       // More info about initialization & config:
       // - https://revealjs.com/initialization/
