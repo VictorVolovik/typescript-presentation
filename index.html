@@ -81,6 +81,18 @@
               <li>
                 <a href="#/16">Типизация массивов</a>
               </li>
+              <li>
+                <a href="#/17">null, undefined, void и never</a>
+              </li>
+              <li>
+                <a href="#/18">Перечисления (enums)</a>
+              </li>
+              <li>
+                <a href="#/19">Функции</a>
+              </li>
+              <li>
+                <a href="#/20">Рекомендуемые материалы</a>
+              </li>
             </ul>
           </section>
         </section>
@@ -106,7 +118,7 @@
             </ul>
           </section>
           <section>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 3 + []            // Evaluates to the string "3"
 
 let obj = {}
@@ -154,7 +166,7 @@ a("z")            // Evaluates to NaN
           <section>
             <h3>Система типов</h3>
             <p>Два подхода - явно обозначать типы либо давать наследовать автоматически.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: number = 1                // a is a number
 let b: string = 'hello'          // b is a string
 let c: boolean[] = [true, false] // c is an array of booleans
@@ -188,11 +200,11 @@ let cc = [true, false]            // cc is an array of booleans
             </ul>
           </section>
           <section>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 3 + [1];                         // evaluates to "31"
 (3).toString() + [1].toString()  // evaluates to "31"
             </code></pre>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 3 + [1];                         // Error TS2365: Operator '+' cannot be applied to
                                  // types '3' and 'number[]'.
 (3).toString() + [1].toString()  // evaluates to "31"
@@ -256,7 +268,7 @@ let cc = [true, false]            // cc is an array of booleans
         <section>
           <h2>any</h2>
           <p>Все что угодно, стоит избегать, так как фактически приравнивает поведение к JS. Можно запретить флагом noImplicitAny или strict модом.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: any = 666            // any
 let b: any = ['danger']     // any
 let c = a + b               // any
@@ -275,7 +287,7 @@ let c = a + b               // any
         <section>
           <h2>unknown</h2>
           <p>Тип заранее неизвестнeн, но можно сравнивать (==, ===, ||, &&, ?), отрицать (!), определять тип (typeof и instanceof).</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: unknown = 30         // unknown
 let b = a === 123           // boolean
 let c = a + 10              // Error TS2571: Object is of type 'unknown'.
@@ -297,7 +309,7 @@ if (typeof a === 'number') {
         <section>
           <h2>boolean</h2>
           <p>Булевые значения - true и false. Доступно сравнение (==, ===, ||, &&, ?), отрицать (!).</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a = true                // boolean
 var b = false               // boolean
 const c = true              // true
@@ -320,7 +332,7 @@ let f: true = false         // Error TS2322: Type 'false' is not assignable
         <section>
           <h2>number</h2>
           <p>Все числа, включая целые числа, числа в плавающей точкой, позитивные и негативные, Infinity, NaN</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a = 1234                // number
 var b = Infinity * 0.10     // number
 const c = 5678              // 5678
@@ -345,7 +357,7 @@ let g: 26.218 = 10          // Error TS2322: Type '10' is not assignable
           <h2>bigint</h2>
           <p>Упрощает работу с большими числами, соответствует BigInt в JS.</p>
           <p>NB поддержка не на всех платформах.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a = 1234n               // bigint
 const b = 5678n             // 5678n
 var c = a + b               // bigint
@@ -370,7 +382,7 @@ let h: bigint = 100         // Error TS2322: Type '100' is not assignable
         <section>
           <h2>string</h2>
           <p>Строки, конкатенация и методы строк.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a = 'hello'             // string
 var b = 'billy'             // string
 const c = '!'               // '!'
@@ -395,7 +407,7 @@ let g: 'john' = 'zoe'       // Error TS2322: Type "zoe" is not assignable
           <section>
             <h2>symbol</h2>
             <p>Соответствуют ES2015</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a = Symbol('a')         // symbol
 let b: symbol = Symbol('b') // symbol
 var c = a === b             // boolean
@@ -415,7 +427,7 @@ let d = a + 'x'             // Error TS2469: The '+' operator cannot be applied
           <section>
             <h3>unique symbol</h3>
             <p>В случае объявления через const либо явным указанием.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 const e = Symbol('e')                // typeof e
 const f: unique symbol = Symbol('f') // typeof f
 let g: unique symbol = Symbol('f')   // Error TS1332: A variable whose type is a
@@ -444,7 +456,7 @@ let i = e === f             // Error TS2367: This condition will always return
             <a href="https://habr.com/ru/post/446768/" target="_blank">статья на тему.</a></p>
             <h3>object</h3>
             <p>Значение - объект и не null.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
   let a: object = {
     b: 'x'
   }
@@ -463,7 +475,7 @@ let i = e === f             // Error TS2367: This condition will always return
           <section>
             <h3>Литерал объекта</h3>
             <p>Автоматическая типизация на основе значения...</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a = {
   b: 'x'
 }            // {b: string}
@@ -487,7 +499,7 @@ let b = {
           </section>
           <section>
             <p>...либо явным указанием</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: {b: number} = {
   b: 12
 }            // {b: number}
@@ -504,7 +516,7 @@ let a: {b: number} = {
           </section>
           <section>
             <p>Объявление через const отличается от примитивных типов, не является литералом типа</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 const a: {b: number} = {
   b: 12
 }            // Still {b: number}
@@ -521,7 +533,7 @@ const a: {b: number} = {
           </section>
           <section>
             <p>Пример с классом.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let c: {
   firstName: string
   lastName: string
@@ -551,7 +563,7 @@ c = new Person('matt', 'smith') // OK
           </section>
           <section>
             <p>Примеры ошибок.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: {b: number}
 
 a = {}  // Error TS2741: Property 'b' is missing in type '{}'
@@ -575,7 +587,7 @@ a = {
           </section>
           <section>
             <p>Пример с объявлением переменной без присваивания значения</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: number
 let b = a * 3  // Error TS2454: Variable 'a' is used
                // before being assigned.
@@ -595,7 +607,7 @@ let j = i * 3  // Error TS2532: Object is possibly
           </section>
           <section>
             <h3>Опциональные свойства объекта</h3>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let a: {
   b: number
   c?: string
@@ -626,7 +638,7 @@ a = {b: 1, 33: 'red'}   // Error TS2741: Type 'string' is not assignable
             <h3>Индексные сигнатуры</h3>
             <p>Для данного объекта все ключи типа T должны иметь значения типа U.</p>
             <p>Ключи могут быть number или string</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let airplaneSeatingAssignments: {
   [seatNumber: string]: string
 } = {
@@ -648,7 +660,7 @@ airplaneSeatingAssignments['34B'] = 167
           </section>
           <section>
             <h3>Свойства только для чтения</h3>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 let user: {
   readonly firstName: string
 } = {
@@ -686,7 +698,7 @@ user.firstName =
           <section>
             <h2>Алиасы типов</h2>
             <p>Возможность объявить алиас для типа. Алиас всегда можно заменить на тип, на который он указывает.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 type Age = number
 
 type Person = {
@@ -713,7 +725,7 @@ let driver: Person = {
           </section>
           <section>
             <p>Алиасы нельзя переопределять, они имеют блочную область видимости.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 type Color = 'red'
 type Color = 'blue'  // Error TS2300: Duplicate identifier 'Color'.
 
@@ -742,7 +754,7 @@ if (x) {
           <h2>Объеденение и пересечение типов</h2>
           <p>Описание отношения типов</p>
           <img src="img/union_vs_intersection.png" height="100"/>
-          <pre><code class="hljs" data-trim contenteditable>
+          <pre><code data-trim contenteditable>
 type Cat = {name: string, purrs: boolean}
 type Dog = {name: string, barks: boolean, wags: boolean}
 type CatOrDogOrBoth = Cat | Dog
@@ -775,7 +787,7 @@ let b: CatAndDog = { name: 'Donkers', barks: true, purrs: true, wags: true }
           <section>
             <h2>Типизация массивов</h2>
             <p>Как и в JS поддерживают конкатенацию, добавление и удаление элементов, поиск итп итд</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
   let a = [1, 2, 3]           // number[]
   var b = ['a', 'b']          // string[]
   let c: string[] = ['a']     // string[]
@@ -810,7 +822,7 @@ let b: CatAndDog = { name: 'Donkers', barks: true, purrs: true, wags: true }
             <h3>Однородность</h3>
             <p>Рекомендуется придерживаться однородности для массивов, когда каждый элемент одного типа.</p>
             <p>После того как массив покинул какую-либо область видимости, его тип финализируется.</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code data-trim contenteditable>
 function buildArray() {
   let a = []                // any[]
   a.push(1)                 // number[]
@@ -832,6 +844,468 @@ myArray.push(true)          // Error 2345: Argument of type 'true' is not
               </a>
             </p>
           </section>
+          <section>
+            <h3>Кортежи (tuples)</h3>
+            <p>Кортежи являются подтипом массивов, имеют фиксированную длину, каждый элемент за конкретным индексом имеет определенный тип. Типы должны быть обозначены в момент объявления.</p>
+            <pre><code data-trim contenteditable>
+  let a: [number] = [1]
+
+  // A tuple of [first name, last name, birth year]
+  let b: [string, string, number] = ['malcolm', 'gladwell', 1963]
+
+  b = ['queen', 'elizabeth', 'ii', 1926]  // Error TS2322: Type 'string' is not
+                                          // assignable to type 'number'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgXBDaA7ArgWwEYgE4F0IF4EBGHAKFIHoKIBBCMZAB1AgHsAzBdgSywGdIiKKhAAaCMCgCIQkePS8wACwgBPEFFylQkdHHgCs3RAHNxh42ZlpMuAggDkqKMADGrYKgfiHJyQBMAdxBgYG8IIgBOADYAZjJSdHt4BwBHZBAQRHCHEO4ALyhMZRzubnCogCZovAgqCABRLCxWLAgAFQBlStjKyrh21UYQCAcLUwcIbj4ZVjBSCEWl5ZXVtfXl+qk+bhMhdBYwVnohkYcUDGwHADogA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Кортежи поддерживают опциональные элементы.</p>
+            <pre><code data-trim contenteditable>
+// An array of train fares, which sometimes vary depending on direction
+let trainFares: [number, number?][] = [
+  [3.75],
+  [8.25, 7.70],
+  [10.50]
+]
+
+// Equivalently:
+let moreTrainFares: ([number] | [number, number])[] = [
+  // ...
+]
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEEEDtQQwJzjAnqA9gM1AF0QS2uvAKYDOANKAO4AWuAxtaCagLZFa5smgBu8KAEyIAHIpAH4A5mmgS4ROh1SQAUABt22PJABixEgC5QAbUgBXFgCMicCuas2A-AF1jz0AF4TK0CYDMAHQA7ACszmQ+JgAcAQBMIRRBwQAM4ZHGAIzJASGpKs4qKiCgAKIAjma4fBqQWGpIBuqaLKjyACraevKGoAAUphbWcO4APib2Q3aDNs4AlG6e3r7FAav5QA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Кортежи поддерживают оставшиеся (rest) параметры.</p>
+            <pre><code data-trim contenteditable>
+// A list of strings with at least 1 element
+let friends: [string, ...string[]] = ['Sara', 'Tali', 'Chloe', 'Claire']
+
+// A heterogeneous list
+let list: [number, boolean, ...string[]] = [1, false, 'a', 'b', 'c']
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEEFQGwSwZwC6gPYDNSIE4wHYHM5QB3GBAC1AEMkoBTSxUARlFroFtacEAoOpVNi4ATOAC5QAbSy48AGlAA6ZTPySAuutABeKQHIAypUyU9CvQBVKsM6D0BhMlGS1bDqJRiZX6njxAQoGS0CLSYyHhctMgAroSwiHwh0PAIEpI4MewARmEK2cjIdJQ4CsqKqngaWrqSTAqo1nC05qbm2W4AxnrqQA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Массивы и кортежи только для чтения</h3>
+            <p>Поддержка ограничения на мутации с помощью readonly.</p>
+            <pre><code data-trim contenteditable>
+let as: readonly number[] = [1, 2, 3]     // readonly number[]
+let bs: readonly number[] = as.concat(4)  // readonly number[]
+let three = bs[2]                         // number
+as[4] = 5            // Error TS2542: Index signature in type
+                     // 'readonly number[]' only permits reading.
+as.push(6)           // Error TS2339: Property 'push' does not
+                     // exist on type 'readonly number[]'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/DYUwLgBAhgzgXBATiKATA9gO2ATwpgVwFsAjERAbQF0IBeCCgRgBoIAmVgZhol4gHp+SFBmx5CpctQBQoSCXjC0WXPmJlKNerAB0AYyx6oYABQAWAJS9BS0aokaZciGAAWyEHQgKKbHnwDAoMCbB3JpWAozLQgAVmCQoQBRRER0RAgAFQBlNlizNgQASUxUEAAPCBgASwBzTGMCZAhqzBccAAcQaQTegJsAcmRlMTVJTQGIFTwuxCJqsBhbVtqdCJgdDoIYVxMANis+mxS0jJy2Tk4ATgQABTTZsDwBrZ3JjBAlzHQwHr6joQVaowSBYdpdCBDETTMaOKgDHRAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>null, undefined, void и never</h2>
+            <p>TS включает следующие специальные значения, имеющие соответствующие типы: null, undefined, void и never.</p>
+            <p><b>null</b> - отсутствие значения.</p>
+            <p><b>undefined</b> - значение для переменной, которой еще не было присвоено значение.</p>
+            <pre><code data-trim contenteditable>
+  // (a) A function that returns a number or null
+  function a(x: number) {
+    if (x < 10) {
+      return x
+    }
+    return null
+  }
+
+  // (b) A function that returns undefined
+  function b() {
+    return undefined
+  }
+            </code></pre>
+          </section>
+          <section>
+            <p><b>void</b> - тип для функций, которые ничего не возвращают.</p>
+            <p><b>never</b> - тип для функций, которые никогда ничего не возвращают (выкидывают эксепшен или работают бесконечно).</p>
+            <pre><code data-trim contenteditable>
+// (c) A function that returns void
+function c() {
+  let a = 2 + 2
+  let b = a * a
+}
+
+// (d) A function that returns never
+function d() {
+  throw TypeError('I always error')
+}
+
+// (e) Another function that returns never
+function e() {
+  while (true) {
+    console.log("forever and ever")
+  }
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEAoEMEpQQVAMwK4DsDGAXAlge1aJgBaSagBOAppsuagM6iSirIC2ARpeaLj6wBsBAKBQYc+JuAAeALhbsu5WAG9hoUNkQRpoADygAjAAZV6jRWq0C08wF9zVGnQVDhD4SAgdYCMVjwCYlJLZwZQNAATSkRsVEpI0TQAyQ5wMw0nawjUaNj4xI8vcHRfJGSJIJIyLLpGADdcbET-StB0dNA1DQFqJlAAXlAAJlAAahHzXrIOQf6AKiZ3YU8wcEiy1sDCatDrRnj67iTxbcjO7p3yXAB3UAAVAE8AB0oAUXJr8nAAcgBJJgCG6QR6MbhfH7QZarCCUXyoXDEbjlU6SYI1Kx1FiUI7kE4pAiUC7mG5EbC9CCYcjIOFdcwadD4ei4XoAOgEuAA5uAAESIPg45GQXKgQXkHlQjQOOxAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Перечисления (enums)</h2>
+            <p>Перечисление - тип данных, чьё множество значений представляет собой ограниченный список идентификаторов.</p>
+            <p>Сущесвует два варианта перечислений: строки к строкам, строки к числам.</p>
+            <pre><code data-trim contenteditable>
+enum Language {
+  English,
+  Spanish,
+  Russian
+}
+
+enum Car {
+  Ferrari = 0,
+  Porsche = 1,
+  McLaren = 2
+}
+
+let myFirstLanguage = Language.Russian      // Language
+let myFavoriteCar = Car['McLaren']          // Car
+let unsafeLanguage = Language.German        // Property 'German'
+                                            // does not exist on type 'typeof Language'.
+
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?ssl=1&ssc=1&pln=17&pc=1#code/KYOwrgtgBAMghiA5mOjhQN4CgpQKJIA2AlgM4AWANDlAMoAOCZVNASmKacQlgL5ZZQkKAGE4AJ0w0AYsHHiJxKAF4oABmq4ACgHtxpAMbl0qgIyaoAWQPxxoFVABMfAYWAAXKBACe04vvd4JBQ0ByDkVGAAOnZObhBcRKgAemTYBAi0LDdPH2k4ADc9YndgMUlVcoBtAHJrW1AagF0k1pS08uyPKDAQUjgAM2BwkJN04MiogHE5CAQ23FSoLXEdejl3bygamfE5kBqoGgWT07OTpYATHWBSKBAdT2AADzJPHQTN9e2v4B0B8aZYA1KJYIA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Пример с цветами.</p>
+            <pre><code data-trim contenteditable>
+enum Color {
+  Red = '#c10000',
+  Blue = '#007ac1',
+  Pink = 0xc10050,        // A hexadecimal literal
+  White = 255             // A decimal literal
+}
+
+let red = Color.Red       // Color
+let pink = Color.Pink     // Color
+
+let b = Color.Green       // Error TS2339: Property 'Green' does not exist
+                          // on type 'typeof Color'.
+let c = Color[0]          // string
+let d = Color[6]          // string (!!!)
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/KYOwrgtgBAwg9gGzgJygbwFBSgJWAEygF4oByAYgGMBGABnttIBosoAhBMYYs8+gdgCGNZqwAKASxABrHrQAeNegFZaTbBo0B6LVACCUABbB5g-MEoSIghFAQSALsGQ3WAdUOPuJAEzLlmoGaOvpQ5pbWtvZOLggYAL4YGAjADlDIBDzwSMgAdHiEQSHZKMmpUAAOUrIkJXmSMoHFiKVlaQBGWS15AOIZoEFQIQCiyMgoUAAqAMo+AMxzAJwAXFBi4xXODgCeZH3AoKRhcMAAzlAgcGkmEqcOrIOPTyFwIFA7m2QfwHAAZrDdUi5NpQShdHIAbVoAF0nkNdHdkFIAOYgwi1boQgBssOeCIcSJAyKgAAoAIQUgCUGCAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <p>Более безопасно использовать const enum.</p>
+            <pre><code data-trim contenteditable>
+const enum Language {
+  English,
+  Spanish,
+  Russian
+}
+
+// Accessing a valid enum key
+let a = Language.English  // Language
+
+// Accessing an invalid enum key
+let b = Language.Tagalog  // Error TS2339: Property 'Tagalog' does not exist
+                          // on type 'typeof Language'.
+
+// Accessing a valid enum value
+let c = Language[0]       // Error TS2476: A const enum member can only be
+                          // accessed using a string literal.
+
+// Accessing an invalid enum value
+let d = Language[6]       // Error TS2476: A const enum member can only be
+                          // accessed using a string literal.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/MYewdgzgLgBApmArgWxgGQIZgOaI9uGAbwCgYYBRHAGwEsIALAGjJgGUAHLe51gJUQQItLCQC+JEgHopMAILBgcIbRwwMMAG4Y6AE3hJUAazgBPEtTiwNAXnRZc+OADoq2Oo3Iz7OPAUneCkoqalgwqtp6BigwJuaWsABGMHaYvk7OACr4OiDYXrIUAE5FIEUwmWwATADMNQCcAFwwAAqlHHBFUKYwAOTZ2LnYvTC6IMowYCCwcAAe9FCs5Msrq2sr3uAw3R19O3AgAGY+jgS9zgGyQcrCoVo6tPoIMZGIcBZWMMApJ35wANoABgAuutvMVSuVKlUACwAdgAbM05F9wNBoqhkHBkIlOl8wuBqD1cUt1mSyd4MIobnB9IJVPkNNAigyYHQoJ0dBdpFdqSFGWBwmBIo8MfdqG8PrB9KkHH9-gjQWtwSUyhVqvCkfJUZAZoYYFicXjgASwESYCTyVawbIqcEILSYPS7szWezOdRnEA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Функции</h2>
+            <pre><code data-trim contenteditable>
+  function add(a: number, b: number): number {
+    return a + b
+  }
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAQwCaoBTIFyLCAWwCMBTAJwBpEjd9jyBKWw0sxAbwChFEySoQZJMkQBqapwC+QA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Способы объявления функций</h3>
+            <pre><code data-trim contenteditable>
+// Named function
+function greet(name: string) {
+  return 'hello ' + name
+}
+
+// Function expression
+let greet2 = function(name: string) {
+  return 'hello ' + name
+}
+
+// Arrow function expression
+let greet3 = (name: string) => {
+  return 'hello ' + name
+}
+
+// Shorthand arrow function expression
+let greet4 = (name: string) => 'hello ' + name
+
+// Function constructor
+let greet5 = new Function('name', 'return "hello " + name')
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/PTAEDkEMFsFMBNQDMCuA7AxgFwJYHs0AoVTXA0AcwCdZYsAKNGWALlAGcsqc0KBKUAG9CoUDSwoqaUAHIAFrAA2ivLNABqUEziEAvoUIhQAMXTZ802AA8ADjXbsLhRXUo06AJlABeZGbJojMxsnNy8AsKi4pLS8koqaprasHoGRgCCVFR4AO5+pBag1nawDk4uWG60WADMPqBBcCFcPPw+AHxCImJ0MbIKyqoyGlrMqYZgAMpyeFRYcpBoiJBZufnm5MX2jgTOrtTVACz1jawcLeEd-fFDI8lpYKYF5BgEoSjYs3uVB3QArPU0LA8k8NoEZMkZAAaWTRKSgABEAwSCLuzBkfCAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Опциальные параметры</h3>
+            <pre><code data-trim contenteditable>
+function log(message: string, userId?: string) {
+  let time = new Date().toLocaleTimeString()
+  console.log(time, message, userId || 'Not signed in')
+}
+
+log('Page loaded') // Logs "12:38:31 PM Page loaded Not signed in"
+log('User signed in', 'da763be') // Logs "12:38:31 PM User signed in da763be"
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAGzgcwBQFsCmBnPAQzRwC5E8oAnGMNAGkRDxyoEkATAfnMproCUiAN4AoRChxREsXIgC8iMDgDuiACKEoODAIB0UOABk4EQshwAVGLgDK1WpgHjEEBHjgW9qTLJyNcAmJ-JhZ2DkQAH0jEAHIAOThpPBg0ZQjaWOcAX1FRHwxYgAVglDhCDhwOLMQAelrEEzQ8RAAiAEYAJlIAZgAOXvbEIoBZYdLUCqrEROTU9MRaVvz0QoBVMIp56czGWI5CAHYANh6AIxwa+sb0Fo7u-sHhsY3WLbSdpAOT85xWoA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Параметры по умолчанию</h3>
+            <pre><code data-trim contenteditable>
+function log(message: string, userId = 'Not signed in') {
+  let time = new Date().toISOString()
+  console.log(time, message, userId)
+}
+
+log('User clicked on a button', 'da763be')
+log('User signed out')
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAGzgcwBQFsCmBnPAQzRwC5E8oAnGMNAGkRDxyoEkATRAXkQHIAcnCgUYaMDi60+ASkQBvAFCIUOEbFw9EEgO6IAIoSg4MMgHRQ4bAMoB5a9VqYZyxBAR44yHGdSYNOIy4BMSBTCzsHC4AvoqKfhh8AKoRbsgwEADWkogIiISIAEYgUJZgfIx8HIQA7ABsAMyFOLLx6IkprKLiOXAlskA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Оставшиеся (rest) параметры</h3>
+            <pre><code data-trim contenteditable>
+function sumVariadicSafe(...numbers: number[]): number {
+  return numbers.reduce((total, n) => total + n, 0)
+}
+
+sumVariadicSafe(1, 2, 3) // evaluates to 6
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABAZxAWwGoEMBOMsAmMEAylsAKYAUAdHWOgEYU7IBciDazOA2gLoBKDlx6IA3gChEiHBSggcSUS2Q05BEBGpUocKFgA2AGk6DEAXgB8iPQcOIA1J1MAGQZIC+kyaky58IlJyagBGUwAmUwBmcwB6OMQKADcjECwoCmRbOEQANkkgA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Типизация this</h3>
+            <p>Использование this не рекомендуется. Флаг - noImplicitThis.</p>
+            <pre><code data-trim contenteditable>
+function fancyDate(this: Date) {
+  return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+}
+
+fancyDate.call(new Date) // evaluates to "6/13/2008"
+fancyDate() // Error TS2684: The 'this' context of type 'void' is
+            // not assignable to method's 'this' of type 'Date'.
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/GYVwdgxgLglg9mABMAhpAngERVApgCigAsYBnALkWzwEpEBvAKEUQCdcoRWkADAEnrEyAOgDmHagRoBfAPQChpMRwCyCYvhnzBJJeKgAxEABtjATVwpWm6T0bTGjVBknCIKU-jC4A7lRy4dLKyiLgAbh4gAaSIUHCIAEQAbLIAjADMsgBMAAw5ABwJTmgQWAGaiMGIAKKsrHCsiAAqAMpZSfkALJRNRLiIAOSKA4gQ6rgAHlCIcMCx6AAO-QNhcDAAJiNkzCy7eyxVYHDTKKSkMKJgKABGxv1xiAC2HERwmzFDuiOz80uDkgNhIwgA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>Сигнатура фунции</h3>
+            <p>Возможность описать тип отдельно от функции.</p>
+            <pre><code data-trim contenteditable>
+type Log = (message: string, userId?: string) => void
+
+let log: Log = (
+  message,
+  userId = 'Not signed in'
+) => {
+  let time = new Date().toISOString()
+  console.log(time, message, userId)
+}
+            </code></pre>
+            <p>
+              <a
+                href="https://www.typescriptlang.org/play?#code/C4TwDgpgBAMg9gcygXigCgLYQM7YIYIQBcU2wATgJYB2CANFAK7YTkCSAJgPwllW0BKFAD4oANziUOAKGkAbCMChzEJeElRoo0qFCy4CEBjqYt2HFFADkAOThLslBNQgWaV7UOSiA3tt0KSsCUWJYuAO5QACJ4wBBoAgB0wHBsAMoA8mkUNAgJJgDGcNTYcAqJKnnBWAz6+IQMzKycAtIAvtJAA"
+                target="_blank"
+                rel="noopener"
+                >
+                TS Playground
+              </a>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h2>Рекомендуемые материалы</h2>
+          <ul>
+            <li>
+              <a
+                href="https://www.typescriptlang.org/docs"
+                target="_blank"
+                rel="noopener"
+                >
+                Официальная документация
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.typescriptlang.org/docs/handbook/intro.html"
+                target="_blank"
+                rel="noopener"
+                >
+                TypeScript Handbook
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://basarat.gitbook.io/typescript/getting-started"
+                target="_blank"
+                rel="noopener"
+                >
+                TypeScript Deep Dive
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/etroynov/typescript-book"
+                target="_blank"
+                rel="noopener"
+                >
+                + перевод
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/dzharii/awesome-typescript"
+                target="_blank"
+                rel="noopener"
+                >
+                Awesome TypeScript
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.piter.com/collection/best/product/professionalnyy-typescript-razrabotka-masshtabiruemyh-javascript-prilozheniy"
+                target="_blank"
+                rel="noopener"
+                >
+                Профессиональный TypeScript. Разработка масштабируемых JavaScript-приложений (перевод издательства Питер)
+              </a>
+            </li>
+          </ul>
         </section>
 
       </div>
@@ -841,6 +1315,7 @@ myArray.push(true)          // Error 2345: Argument of type 'true' is not
     <script src="plugin/notes/notes.js"></script>
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
+
     <script>
       // More info about initialization & config:
       // - https://revealjs.com/initialization/
